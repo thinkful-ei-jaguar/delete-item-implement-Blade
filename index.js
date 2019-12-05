@@ -1,3 +1,5 @@
+/* eslint-disable quotes */
+/* eslint-disable no-console */
 'use strict';
 
 const STORE = [
@@ -81,11 +83,23 @@ function handleItemCheckClicked() {
   });
 }
 
+function deleteClickedItem(itemId) {
+  console.log(`Deleting item with id ${itemId} from the store`);
+  const item = STORE.find(item => item.id === itemId);
+  //not sure if the cleanest way, but it works
+  STORE.splice(STORE.indexOf(item), 1);
+}
 
 function handleDeleteItemClicked() {
   // this function will be responsible for when users want to delete a shopping list
   // item
-  console.log('`handleDeleteItemClicked` ran')
+  $('.js-shopping-list').on('click', `.js-item-delete`, event => {
+    console.log('`handleDeleteItemClicked` ran');
+    const id = getItemIdFromElement(event.currentTarget);
+    deleteClickedItem(id);
+    renderShoppingList();
+  });
+  
 }
 
 // this function will be our callback when the page loads. it's responsible for
